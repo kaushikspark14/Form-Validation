@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <title>Form Validation</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            .error {
+                color: red;
+            }
+           body {
+        font-family: Arial, sans-serif;
+        background-color: lightblue;
+    }
+
+    h1 {
+        font-size: 28px;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    #form {
+        width: 500px;
+        margin: auto;
+        border: 1px solid #ccc;
+        padding: 20px;
+        background-color: #FFF;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .btn {
+        margin-top: 15px;
+    }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Form Validation</h1>
+            <form id="form" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" class="form-control" id="name" onchange="validateName()" required>
+                    <div id="nameError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email ID:</label>
+                    <input type="email" class="form-control" id="email" onchange="validateEmail()" required>
+                    <div id="emailError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" class="form-control" id="phone" onchange="validatePhone()" required>
+                    <div id="phoneError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" onchange="validatePassword()" required>
+                    <div id="passwordError" class="error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirmPassword" onchange="validateConfirmPassword()" required>
+                    <div id="confirmError" class="error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <script>
+            function validateForm() {
+                if (validateName() && validateEmail() && validatePhone() && validatePassword() && validateConfirmPassword()) {
+                    alert('Form submitted');
+                    return true;
+                } else {
+                    alert('Form not valid');
+                    return false;
+                }
+            }
+            function validateName() {
+                var name = document.getElementById('name').value;
+                if (name.length < 5) {
+                    document.getElementById('nameError').innerHTML = 'Name must be at least 5 characters';
+                    return false;
+                }
+                document.getElementById('nameError').innerHTML = '';
+                return true;
+            }
+            function validateEmail() {
+                var email = document.getElementById('email').value;
+                if (email.indexOf('@') === -1) {
+                    document.getElementById('emailError').innerHTML = 'Email must contain "@"';
+                    return false;
+                }
+                document.getElementById('emailError').innerHTML = '';
+                return true;
+            }
+            function validatePhone() {
+                var phone = document.getElementById('phone').value;
+                if (phone.length !== 10 || phone == '1234567890') {
+                    document.getElementById('phoneError').innerHTML = 'Phone number must be a 10 digit number';
+                    return false;
+                }
+                document.getElementById('phoneError').innerHTML = '';
+                return true;
+            }
+            function validatePassword() {
+                var password = document.getElementById('password').value;
+                var name = document.getElementById('name').value;
+                if (password == 'password' || password == name || password.length < 8) {
+                    document.getElementById('passwordError').innerHTML = 'Password must not be "password", name or less than 8 characters';
+                    return false;
+                }
+                document.getElementById('passwordError').innerHTML = '';
+                return true;
+            }
+            function validateConfirmPassword() {
+                var password = document.getElementById('password').value;
+                var confirmPassword = document.getElementById('confirmPassword').value;
+                if (password != confirmPassword) {
+                    document.getElementById('confirmError').innerHTML = 'Passwords do not match';
+                    return false;
+                }
+                document.getElementById('confirmError').innerHTML = '';
+                return true;
+            }
+        </script>
+    </body>
+</html>
